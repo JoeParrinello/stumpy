@@ -20,14 +20,14 @@ bot = Cinch::Bot.new do
     end
   end
 
-  on :channel, /^!stumpy (http.+)/ do |m, url_list|
-    urls = URI.extract(url_list, "http")
+  on :channel, /^!stumpy (.+)/ do |m, url_list|
+    urls = URI.extract(url_list, ["http","https"])
 
     unless urls.empty?
       short_urls = urls.map {|url| shorten(url) }.compact
 
       unless short_urls.empty?
-        m.reply short_urls.join(", ")
+        m.reply short_urls.join("\n")
       end
     end
   end
